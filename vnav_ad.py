@@ -696,7 +696,7 @@ def main():
 
     #--------------------------------
     seconds_between_samples = 1
-    number_of_samples_each_file=10
+    number_of_samples_each_file=1000
     log_file_location="vnav_logs"
     log_file_name=''
     display2screen = True
