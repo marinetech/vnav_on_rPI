@@ -679,24 +679,30 @@ class VectorNav(object):
 
 
 def main():
-    if len(sys.argv) < 2:
-        print 'Usage: python vectornav.py <sync|async> [com-port] [baud-rate]'
+    if len(sys.argv) < 5:
+        print 'Usage: python vectornav.py <sync|async> <seconds_between_samples> <number_of_samples_each_file> <number_of_files> [com-port] [baud-rate]'
         return
 
     port = None
     baud = VectorNav.DEFAULT_BAUD
 
-    if len(sys.argv) > 2:
-        port = sys.argv[2]
-
-    if len(sys.argv) > 3:
-        baud = int(sys.argv[3])
-
     mode_str = sys.argv[1]
+    seconds_between_samples = float(sys.argv[2])
+    number_of_samples_each_file = int(sys.argv[3])
+    number_of_files = int(sys.argv[4])
+    current_file_cnt=0
+
+    if len(sys.argv) > 5:
+        port = sys.argv[5]
+
+    if len(sys.argv) > 6:
+        baud = int(sys.argv[6])
+
 
     #--------------------------------
-    seconds_between_samples = 1
-    number_of_samples_each_file=1000
+    # seconds_between_samples=1
+    # number_of_samples_each_file=1000
+    # number_of_files=3
     log_file_location="vnav_logs"
     log_file_name=''
     display2screen = True
@@ -739,6 +745,10 @@ def main():
 
             #-------------
             if(current_sample_id == 0):
+                if(current_file_cnt>=number_of_files):
+                    break
+                else :
+                    current_file_cnt+=1
                 dt = datetime.today()
                 log_file_name=log_file_location+"/samples_"+dt.strftime("%Y_%m_%d_%H%M%S")+".csv";
 
